@@ -15,6 +15,8 @@ async def cluster_endpoint(sub: dict):
     """Endpoint takes a list of cohort and submission objects then returns
     clusters based on cohort in groups of 4.
 
+    ***Creates 'Teams' for a 'Cohort'***
+
     Arguments:
     ---
 
