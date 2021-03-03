@@ -156,6 +156,10 @@ These links were important to learn where to start with `AWS`:
 
    - In the `/text` endpoint, the transcription service and `squad_score` method are used to transcribe, flag, and score submissions,
 
+   - The `/illustration` endpoint uses the google safe search API to flag explicit content.
+
+   - The `/illustration_complexity` endpoint fetches the image url from the s3 bucket. Uses the Sha512 hash function to assure the file contents we received are correct. Returns an error if the contents are not the same. Uses the model from img_scoring.py to predict the complexity score of the drawing submission. Returns a JSON dictionary with the submission ID and the complexity score. 
+
    - A particular note about the `/cluster` endpoint. Because of the limitations with Pydantic data modeling package, we could not structure a proper request body model.
    Our request body was structured with cohort IDs as the dictionary keys, then nested dictionaries inside each contained submissionIDs as keys. Given that the cluster endpoint was a late implementation into the project, we were bound by these limitations and therefore built a model around the existing request body. in future iterations **we would HIGHLY RECOMMEND changing the request body of this endpoint** so that a proper Pydantic model can be used to build out the SwaggerUI example request body.
 
