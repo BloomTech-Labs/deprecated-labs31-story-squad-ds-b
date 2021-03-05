@@ -102,3 +102,40 @@ async def submission_illustration(sub: ImageSubmission):
     # respond with the output dictionary that is returned from
     # GoogleAPI.transcribe() method
     return JSONResponse(status_code=200, content=response)
+
+
+@router.post("/submission/illustration_complexity")
+async def submission_illustration(sub: ImageSubmission):
+    """Takes a submitted Image and calls the image scoring model on it
+
+    Arguments:
+    ---
+    sub : ImageSubmission(Object)
+
+    returns:
+    ---
+    JSON: {"SubmissionID": int, "Complexity": int}
+    """
+    # fetch file from s3 bucket
+    r = get(sub.URL)
+    # initalize the sha hashing algorithm
+    hash = sha512()
+    # update the SHA with the file contents
+    hash.update(r.content)
+    # assert that the computed hash and the passed hash are the same
+    try:
+        assert hash.hexdigest() == sub.Checksum
+    except AssertionError:
+        # return bad hash error with the status_code to an ill-formed request
+        return JSONResponse(status_code=422, content={"ERROR": "BAD CHECKSUM"})
+    # Make prediction with the model
+    prediction =  await model.predict(r.content)
+    # respond with the output dictionary that is returned from
+    # model.predict() method
+    return JSONResponse(
+        status_code=200, 
+        content={
+            "SubmissionID": sub.SubmissionID,
+            "Complexity": prediction
+        }
+    )

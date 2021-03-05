@@ -53,8 +53,8 @@ model.compile(
 model.summary()
 
 # Quick save of our file paths for the data directorys 
-Train = r'Image_scoring\Data\Training'
-Vali = r'Image_scoring\Data\Validation'
+Train = r'Image_scoring/Data/Training'
+Vali = r'Image_scoring/Data/Validation'
 
 
 # we will create a data augmentor that will augment our images before seeing the
