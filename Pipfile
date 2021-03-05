@@ -41,6 +41,11 @@ sqlalchemy = "*"
 python-dotenv = "*"
 wget = "*"
 pillow = "*"
+tensorflow-rocm = "*"
+imutils = "*"
+tensorflow = "*"
+keras = "*"
+scikit-image = "*"
 
 [requires]
 python_version = "3.8"
